@@ -1,0 +1,52 @@
+#######################################
+# Dealing with NAs and missing values #
+#######################################
+
+df.my_feature.fillna( df.my_feature.mean() )
+df.fillna(0)
+
+df.fillna(method='ffill')  # fill the values forward
+df.fillna(method='bfill')  # fill the values in reverse
+df.fillna(limit=5)
+
+df.interpolate(method='polynomial', order=2)
+
+#################
+# Dropping data #
+#################
+
+df = df.dropna(axis=0)  # remove any row with nans
+df = df.dropna(axis=1)  # remove any column with nans
+	
+# Drop any row with NaNs that has at least 4 non-NaNs within it:
+df = df.dropna(axis=0, thresh=4)
+
+# Axis=1 for columns
+df = df.drop(labels=['Features', 'To', 'Delete'], axis=1)
+
+# Dealing with duplicates
+
+df = df.drop_duplicates(subset=['Feature_1', 'Feature_2'])
+# Resetting the index
+df = df.reset_index(drop=True)
+
+# Chaining commands
+df = df.dropna(axis=0, thresh=2).drop(labels=['ColA', axis=1]).drop_duplicates(subset=['ColB', 'ColC']).reset_index()
+
+######################
+# sorting data types #
+######################
+
+df.dtypes
+df.Date = pd.to_datetime(df.Date, errors='coerce')
+df.Height = pd.to_numeric(df.Height, errors='coerce')
+df.Weight = pd.to_numeric(df.Weight, errors='coerce')
+df.Age = pd.to_numeric(df.Age, errors='coerce')
+df.dtypes
+
+############################
+# unique values and counts #
+############################
+
+df.Age.unique()
+df.Age.value_counts()

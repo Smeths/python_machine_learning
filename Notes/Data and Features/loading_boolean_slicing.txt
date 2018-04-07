@@ -1,0 +1,73 @@
+##################
+# Importing data #
+##################
+
+import pandas as pd
+
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///:memory:')
+    
+sql_dataframe   = pd.read_sql_table('my_table', engine, columns=['ColA', 'ColB'])
+xls_dataframe   = pd.read_excel('my_dataset.xlsx', 'Sheet1', na_values=['NA', '?'])
+json_dataframe  = pd.read_json('my_dataset.json', orient='columns')
+csv_dataframe   = pd.read_csv('my_dataset.csv', sep=',')
+table_dataframe = pd.read_html('http://page.com/with/table.html')[0]
+
+################
+# Writing data #
+################
+
+my_dataframe.to_sql('table', engine)
+my_dataframe.to_excel('dataset.xlsx')
+my_dataframe.to_json('dataset.json')
+my_dataframe.to_csv('dataset.csv')
+
+##########################
+# Descriptive statistics #
+########################## 
+
+df.head(5)
+df.describe()
+df.dtypes
+
+######################
+# Slicing and dicing #
+# Selecting columns  #
+######################
+
+# Selects columns and returns series
+df.recency
+df['recency']
+# Selects columns and returns data frames
+df[['recency']]
+# Selects columns and returns series
+df.loc[:, 'recency']
+# Selects columns and returns data frames
+df.loc[:, ['recency']]
+# Selects columns and returns series
+df.iloc[:, 0]
+# Selects columns and returns data frames
+df.iloc[:, [0]]
+
+##################
+# Selecting rows #
+##################
+
+df[0:2]
+df.iloc[0:2, :]
+
+The last important difference is that .loc[] is inclusive of the range of values specified, w
+hereas .iloc[] is non-inclusive. In that sense, df.loc[0:1, :] would select the first two rows, 
+but only the first row would be returned using df.iloc[0:1, :].
+
+# Boolean indexing
+
+df[ (df.recency < 7) & (df.newbie == 0) ]
+
+
+
+
+
+
+
+
